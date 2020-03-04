@@ -1,13 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
+import java.applet.Applet;
 
-public class Sqaure
+public class Square extends JButton
 {
-    public void Water()
+    public Square ()
     {
         ImageIcon x = new ImageIcon("Water.png");
-        JButton b = new JButton(x);
+        this.setIcon(x);
     }
-
-    public void Lil
-
 }

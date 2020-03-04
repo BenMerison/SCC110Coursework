@@ -2,22 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.applet.Applet;
 
-public class Board
+public class Board 
 {
     public static void main (String[] args)
     {
         JFrame a = new JFrame();
         JPanel gridPanel = new JPanel();
-                
+                              
         a.setContentPane(gridPanel);
 
         gridPanel.setLayout(new GridLayout(5,5));
 
-        for (int i = 0; i<25; i++)
+        for (int row = 0; row < 25; row++)
         {
-        JButton b = new JButton(x);
-        gridPanel.add(b);
-        b.setIcon(x);
+            gridPanel.add(new Square());
         }
         
         a.setTitle("Frog Hopper!");
@@ -26,6 +24,4 @@ public class Board
         a.setVisible(true);
 
     }
-
-
 }
