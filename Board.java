@@ -8,6 +8,8 @@ public class Board implements ActionListener
 {
     private Square buttons[][] = new Square[5][5];
 
+    private Square squareToMove = null;
+
     public Board ()
     {
         JFrame board = new JFrame();
@@ -25,7 +27,6 @@ public class Board implements ActionListener
               Square s = new Square (1, row, col);
               buttons[row][col] = s;
             }
-
             else
             {
               Square s = new Square (0, row, col);
@@ -36,7 +37,6 @@ public class Board implements ActionListener
             buttons[row][col].addActionListener(this);
           }
         }
-
         buttons[1][1].SetImage(2);
         buttons[1][3].SetImage(2);
         buttons[2][2].SetImage(2);
@@ -44,18 +44,12 @@ public class Board implements ActionListener
         buttons[4][4].SetImage(2);
         buttons[4][2].SetImage(3);
 
-
-    
         board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         board.setVisible(true);
-
     }
-
-    private Square squareToMove = null;
 
     public void actionPerformed(ActionEvent e) 
     {
-
         Object source = e.getSource();
 
         for (int r = 0; r < 5; r++)
@@ -65,45 +59,41 @@ public class Board implements ActionListener
 
             if (source == buttons[r][c])
             {
-              if (squareToMove != null)
-              {
-                squareToMove.MoveTo(buttons[r][c]);
-                buttons[r][c].SetImage(squareToMove.GetType());
-                squareToMove.SetImage(1);
-                squareToMove = null;
-
-                if (buttons[r][c].GetType() == 4)
-                {
-                  buttons[r][c].SetImage(2);
-                }
-                else if (buttons[r][c].GetType() == 5)
-                {
-                  buttons[r][c].SetImage(3);
-                }
-              }
-
-              else if (squareToMove == null)        
-              {
-                if (buttons[r][c].GetType() != 0 || buttons[r][c].GetType() != 1)
-                {
-                  if (buttons[r][c].GetType() == 2)
-                  {
-                    buttons[r][c].SetImage(4);
-                  }
-                  else if (buttons[r][c].GetType() == 3)
-                  {
-                    buttons[r][c].SetImage(5);
-                  }
-                }
-                else 
-                {
-                  squareToMove = null;
-                }
-
-                squareToMove = buttons[r][c];
-              }
-              }
+              this.processMove(r, c);
             }
           }
         }
+    }
+
+    public void processMove (int r, int c)
+    { 
+      if (squareToMove != null && buttons[r][c].GetType() != 0)
+      {
+        squareToMove.MoveTo(buttons[r][c]);
+        buttons[r][c].SetImage(squareToMove.GetType());
+        squareToMove.SetImage(1);
+        squareToMove = null;
+
+        if (buttons[r][c].GetType() == 4)
+        {
+          buttons[r][c].SetImage(2);
+        }
+        else if (buttons[r][c].GetType() == 5)
+        {
+          buttons[r][c].SetImage(3);
+        }
       }
+
+      else if (buttons[r][c].GetType() == 0)
+      {
+        squareToMove = null;
+        return;
+      }
+
+      else 
+      {
+              squareToMove = buttons[r][c];
+              return;
+      }
+    }
+}

@@ -39,11 +39,12 @@ public class Square extends JButton
         iconArray[0] = new ImageIcon("Water.png", "Water icon");
         iconArray[1] = new ImageIcon("Lilypad.png", "Lilypad icon");
         iconArray[2] = new ImageIcon("GreenFrog.png", "GreenFrog icon");
-        iconArray[3]= new ImageIcon("RedFrog.png", "RedFrog icon");
+        iconArray[3] = new ImageIcon("RedFrog.png", "RedFrog icon");
         iconArray[4] = new ImageIcon("GreenFrog2.png", "GreenFrogClicked icon");
         iconArray[5] = new ImageIcon("RedFrog2.png", "RedFrogClicked icon");
 
         this.setIcon(iconArray[type]);
+        this.type = type;
         
     }
 
