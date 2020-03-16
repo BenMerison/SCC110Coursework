@@ -56,4 +56,28 @@ public class Square extends JButton
         xCoord = newX;
         yCoord = newY;
     }
+
+    public void ButtonClicked ()
+    {
+        if (this.type == 4)
+        {
+          this.SetImage(2);
+          this.type = 2;
+        }
+        else if (this.type == 5)
+        {
+          this.SetImage(3);
+          this.type = 3;
+        }
+        else if (this.type == 2)
+        {
+          this.SetImage(4);
+          this.type = 4;
+        }
+        else if (this.type == 3)
+        {
+          this.SetImage(5);
+          this.type = 5;
+        }
+    }
 }

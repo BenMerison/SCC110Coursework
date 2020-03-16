@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 public class Board implements ActionListener
 {
     private Square buttons[][] = new Square[5][5];
-
     private Square squareToMove = null;
+    private Object source;
 
     public Board ()
     {
@@ -50,7 +50,7 @@ public class Board implements ActionListener
 
     public void actionPerformed(ActionEvent e) 
     {
-        Object source = e.getSource();
+        source = e.getSource();
 
         for (int r = 0; r < 5; r++)
         {
@@ -67,21 +67,15 @@ public class Board implements ActionListener
 
     public void processMove (int r, int c)
     { 
-      if (squareToMove != null && buttons[r][c].GetType() != 0)
+
+      if (squareToMove != null && buttons[r][c].GetType() != 0 && squareToMove != source) 
       {
         squareToMove.MoveTo(buttons[r][c]);
         buttons[r][c].SetImage(squareToMove.GetType());
         squareToMove.SetImage(1);
         squareToMove = null;
 
-        if (buttons[r][c].GetType() == 4)
-        {
-          buttons[r][c].SetImage(2);
-        }
-        else if (buttons[r][c].GetType() == 5)
-        {
-          buttons[r][c].SetImage(3);
-        }
+        buttons[r][c].ButtonClicked();
       }
 
       else if (buttons[r][c].GetType() == 0)
@@ -89,19 +83,23 @@ public class Board implements ActionListener
         return;
       }
 
+      else if (squareToMove == source)
+      {
+        squareToMove = null;
+        buttons[r][c].ButtonClicked();
+        return;
+      }
+
       else 
       {
-        if (buttons[r][c].GetType() == 2)
-        {
-          buttons[r][c].SetImage(4);
-        }
-        else if (buttons[r][c].GetType() == 3)
-        {
-          buttons[r][c].SetImage(5);
-        }
-
+        buttons[r][c].ButtonClicked();
         squareToMove = buttons[r][c];
         return;
       }
+    }
+
+    public void validMove (Square newLocation)
+    {
+
     }
 }
