@@ -86,14 +86,22 @@ public class Board implements ActionListener
 
       else if (buttons[r][c].GetType() == 0)
       {
-        squareToMove = null;
         return;
       }
 
       else 
       {
-              squareToMove = buttons[r][c];
-              return;
+        if (buttons[r][c].GetType() == 2)
+        {
+          buttons[r][c].SetImage(4);
+        }
+        else if (buttons[r][c].GetType() == 3)
+        {
+          buttons[r][c].SetImage(5);
+        }
+
+        squareToMove = buttons[r][c];
+        return;
       }
     }
 }
