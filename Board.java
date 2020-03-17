@@ -37,12 +37,12 @@ public class Board implements ActionListener
             buttons[row][col].addActionListener(this);
           }
         }
-        buttons[1][1].SetImage(2);
-        buttons[1][3].SetImage(2);
-        buttons[2][2].SetImage(2);
-        buttons[4][0].SetImage(2);
-        buttons[4][4].SetImage(2);
-        buttons[4][2].SetImage(3);
+        buttons[1][1].changeImage(2);
+        buttons[1][3].changeImage(2);
+        buttons[2][2].changeImage(2);
+        buttons[4][0].changeImage(2);
+        buttons[4][4].changeImage(2);
+        buttons[4][2].changeImage(3);
 
         board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         board.setVisible(true);
@@ -56,7 +56,6 @@ public class Board implements ActionListener
         {
           for (int c = 0; c< 5; c++)
           {
-
             if (source == buttons[r][c])
             {
               this.processMove(r, c);
@@ -67,39 +66,54 @@ public class Board implements ActionListener
 
     public void processMove (int r, int c)
     { 
-
-      if (squareToMove != null && buttons[r][c].GetType() != 0 && squareToMove != source) 
+      if (squareToMove != null && buttons[r][c].getIconType() != 0 && squareToMove != source) 
       {
-        squareToMove.MoveTo(buttons[r][c]);
-        buttons[r][c].SetImage(squareToMove.GetType());
-        squareToMove.SetImage(1);
-        squareToMove = null;
+        if (validMove(buttons[r][c].getSquareX(), buttons[r][c].getSquareY(), squareToMove.getSquareX(), squareToMove.getSquareY()))
+        {
+          buttons[r][c].moveTo(squareToMove);
+          squareToMove.changeImage(1);
+          squareToMove = null;
+          buttons[r][c].buttonClicked();
+        }
 
-        buttons[r][c].ButtonClicked();
+        else{
+          return;
+        }
+    
       }
-
-      else if (buttons[r][c].GetType() == 0)
+      else if (buttons[r][c].getIconType() == 0)
       {
         return;
       }
-
       else if (squareToMove == source)
       {
         squareToMove = null;
-        buttons[r][c].ButtonClicked();
+        buttons[r][c].buttonClicked();
         return;
       }
-
       else 
       {
-        buttons[r][c].ButtonClicked();
-        squareToMove = buttons[r][c];
+        if (buttons[r][c].getIconType() != 0 && buttons[r][c].getIconType() != 1)
+        {
+          buttons[r][c].buttonClicked();
+          squareToMove = buttons[r][c];
+        }
         return;
       }
     }
-
-    public void validMove (Square newLocation)
+    public boolean validMove (int rN, int cN, int rO, int cO)
     {
+      int rowChange = Math.abs(rO - rN);
+      int colChange = Math.abs(cO - cN);
 
+      if (rowChange == 2 && colChange == 2)
+      {
+        return true;
+      }
+      else if (rowChange == 0 && colChange == 4 || rowChange == 4 && colChange == 0)
+      {
+        return true;
+      }
+      return false;
     }
 }
