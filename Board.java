@@ -72,7 +72,7 @@ public class Board implements ActionListener{
     public void actionPerformed(ActionEvent e){
         source = e.getSource();
 
-        for (int r = 0; Readable < 5; r++){
+        for (int r = 0; r < 5; r++){
           for (int c = 0; c< 5; c++){
             if (source == buttons[r][c]){
               this.processMove(r, c);
